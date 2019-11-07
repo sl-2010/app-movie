@@ -12,8 +12,7 @@ class App extends React.Component {
   }
 
   removeMovie = movie => {
-    const updateMovies = this.state.movies
-    .filter(it => it.id !== movie.id)
+    const updateMovies = this.state.movies.filter(it => it.id !== movie.id)
     this.setState({
       movies: updateMovies
     })
@@ -27,8 +26,7 @@ class App extends React.Component {
   }
 
   removeMovieFromWillWatch = movie => {
-    const updateMoviesWillWatch = this.state.moviesWillWatch
-    .filter(it => it.id !== movie.id)
+    const updateMoviesWillWatch = this.state.moviesWillWatch.filter(it => it.id !== movie.id)
     this.setState({
       moviesWillWatch: updateMoviesWillWatch
     })
@@ -40,14 +38,20 @@ class App extends React.Component {
       <div className="container">
         <div className="row">
           <div className="col-9">
-            {this.state.movies.map(movie => {
-            return <MovieItem
-              key={movie.id}
-              movie={movie}
-              removeMovie={this.removeMovie}
-              addMovieToWillWatch={this.addMovieToWillWatch}
-              removeMovieFromWillWatch={this.removeMovieFromWillWatch}/>
-            })}
+            <div className="row">
+              {this.state.movies.map(movie => {
+                return (
+                  <div className="col-6 mb-4" key={movie.id}>
+                    <MovieItem
+                      movie={movie}
+                      removeMovie={this.removeMovie}
+                      addMovieToWillWatch={this.addMovieToWillWatch}
+                      removeMovieFromWillWatch={this.removeMovieFromWillWatch}
+                    />
+                  </div>
+                )
+              })}
+            </div>
           </div>
           <div className="col-3">
             <p>Will Watch: {this.state.moviesWillWatch.length}</p>
