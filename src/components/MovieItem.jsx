@@ -1,12 +1,27 @@
 import React from "react";
+import "../style.css"
 
 class MovieItem extends React.Component {
   constructor() {
     super()
 
     this.state = {
-      willWatch: false
+      willWatch: false,
+      showDescription: false,
+      like: false
     }
+  }
+
+  toggleOverview = ()=> {
+    this.setState({
+      showDescription: !this.state.showDescription
+    })
+  }
+
+  handleLike = ()=> {
+    this.setState({
+      like: !this.state.like
+    })
   }
 
   render () {
@@ -56,6 +71,17 @@ class MovieItem extends React.Component {
             </button>
           </div>
         </div>
+        <button type="button" onClick={this.toggleOverview}
+        >
+          Overview
+        </button>
+        <p>{this.state.showDescription ? <p>{movie.overview}</p> : null}</p>
+        <button type="button"
+        onClick={this.handleLike}
+        className={this.state.like ? "btn--like" : ""}
+        >
+          like
+        </button>
       </div>
     )
   }
