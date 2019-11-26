@@ -1,3 +1,15 @@
+
 .btn--like {
   background: blue
+}
+
+#page {
+    list-style-type: none;
+    display: inline-flex;
+    padding-left: 0px;
+}
+
+#page a {
+  color: grey;
+  margin: 20px;
 }

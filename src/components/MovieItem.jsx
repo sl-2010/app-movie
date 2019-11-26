@@ -2,15 +2,17 @@ import React from "react";
 import "../style.css"
 
 class MovieItem extends React.Component {
-  constructor() {
-    super()
 
-    this.state = {
-      willWatch: false,
-      showDescription: false,
-      like: false
-    }
+  state = {
+    willWatch: false,
+    showDescription: false,
+    like: false
   }
+
+
+  // componentWillUnmount(){
+  //   console.log("will unmount", this.props.movie.title )
+  // }
 
   toggleOverview = ()=> {
     this.setState({
@@ -25,7 +27,12 @@ class MovieItem extends React.Component {
   }
 
   render () {
-    const {movie, removeMovie, addMovieToWillWatch, removeMovieFromWillWatch } = this.props
+    const {
+      movie,
+      removeMovie,
+      addMovieToWillWatch,
+      removeMovieFromWillWatch
+    } = this.props
     return (
       <div className="card">
         <img className="card-img-top"

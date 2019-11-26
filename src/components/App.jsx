@@ -2,6 +2,7 @@ import React from "react";
 // import { moviesData } from "../moviesData";
 import MovieItem from "./MovieItem";
 import MovieTabs from "./MovieTabs";
+import ButtonPages from "./ButtonPages";
 import { API_URL, API_KEY_3 } from "../utils/api"
 
 class App extends React.Component {
@@ -11,24 +12,44 @@ class App extends React.Component {
     this.state = {
       movies:[],
       moviesWillWatch: [],
-      sort_by: "popularity.desc"
+      sort_by: "popularity.desc",
+      page: 1,
+      pages: 1
     }
     console.log('constructor')
   }
 
   componentDidMount(){
     console.log('did mount')
-    fetch(`${API_URL}/discover/movie?api_key=${API_KEY_3}&sort_by=${this.state.sort_by}`).then((response) => {
-      console.log("then")
-      return response.json()
-    }).then((data) => {
-      console.log("data", data)
-      this.setState({
-        movies: data.results
-      })
-    })
+    this.getMovies()
 
     console.log("after fetch")
+  }
+
+  componentDidUpdate(prevProps, prevState){
+    console.log("did update")
+    console.log("prev", prevProps, prevState)
+    console.log("this", this.props, this.state)
+    if (prevState.sort_by !== this.state.sort_by ||
+      prevState.page !== this.state.page) {
+      console.log("call api")
+      this.getMovies()
+    }
+  }
+
+  getMovies = () => {
+    fetch(
+      `${API_URL}/discover/movie?api_key=${API_KEY_3}&sort_by=${this.state.sort_by}&page=${this.state.page}`)
+    .then((response) => {
+      return response.json()
+    }).then((data) => {
+      this.setState({
+        movies: data.results,
+        page: data.page,
+        pages: data.total_pages
+      })
+      console.log("total_pages", this.state.pages)
+    })
   }
 
   removeMovie = movie => {
@@ -58,11 +79,24 @@ class App extends React.Component {
     })
   }
 
+  updatePage = value => {
+    this.setState({
+      page: value
+    })
+  }
+
 
   render(props) {
-    console.log('render')
+    console.log('render', this.state.sort_by)
     return (
       <div className="container">
+        <div>
+          <ButtonPages
+            page={this.state.page}
+            updatePage={this.updatePage}
+            pages={this.state.pages}
+          />
+        </div>
         <div className="row">
           <div className="col-9">
             <div className="row">
@@ -82,10 +116,12 @@ class App extends React.Component {
           </div>
           <div className="col-3">
             <p>Will Watch: {this.state.moviesWillWatch.length}</p>
+            
             <div className="col-9">
               <MovieTabs
                 sort_by={this.state.sort_by}
-                updateSortBy={this.updateSortBy}/>
+                updateSortBy={this.updateSortBy}
+                />
             </div>
           </div>
         </div>

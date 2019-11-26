@@ -16,8 +16,8 @@ const MovieTabs = (props) => {
       <ul className="tabs nav nav-pills col-3">
         <li className="nav-item tab">
           <div
-          className={getClassName("popularity.desc")}
-          onClick={handleClick("popularity.desc")}
+            className={getClassName("popularity.desc")}
+            onClick={handleClick("popularity.desc")}
           >
             Popularity
           </div>
@@ -32,7 +32,7 @@ const MovieTabs = (props) => {
         </li>
         <li className="nav-item">
           <div
-            className={getClassName("vote_count")}
+            className={getClassName("vote_count.desc")}
             onClick={handleClick("vote_count.desc")}
           >
             Vote
