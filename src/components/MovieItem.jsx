@@ -1,41 +1,40 @@
-import React from "react";
-import "../style.css"
+import React from 'react'
+import '../style.css'
 
 class MovieItem extends React.Component {
-
   state = {
     willWatch: false,
     showDescription: false,
-    like: false
+    like: false,
   }
-
 
   // componentWillUnmount(){
   //   console.log("will unmount", this.props.movie.title )
   // }
 
-  toggleOverview = ()=> {
+  toggleOverview = () => {
     this.setState({
-      showDescription: !this.state.showDescription
+      showDescription: !this.state.showDescription,
     })
   }
 
-  handleLike = ()=> {
+  handleLike = () => {
     this.setState({
-      like: !this.state.like
+      like: !this.state.like,
     })
   }
 
-  render () {
+  render() {
     const {
       movie,
       removeMovie,
       addMovieToWillWatch,
-      removeMovieFromWillWatch
+      removeMovieFromWillWatch,
     } = this.props
     return (
       <div className="card">
-        <img className="card-img-top"
+        <img
+          className="card-img-top"
           src={`https://image.tmdb.org/t/p/w500${movie.backdrop_path ||
             movie.poster_path}`}
           alt=""
@@ -46,23 +45,25 @@ class MovieItem extends React.Component {
             <p className="mb-0">Rating: {movie.vote_average}</p>
 
             {this.state.willWatch ? (
-              <button type="button"
-              className="btn btn-success"
-              onClick={() => {
-                this.setState({
-                  willWatch: false
-                })
-                removeMovieFromWillWatch(movie)
-              }}
+              <button
+                type="button"
+                className="btn btn-success"
+                onClick={() => {
+                  this.setState({
+                    willWatch: false,
+                  })
+                  removeMovieFromWillWatch(movie)
+                }}
               >
                 Remove Will Watch
               </button>
-              ) : (
-              <button type="button"
+            ) : (
+              <button
+                type="button"
                 className="btn btn-secondary"
                 onClick={() => {
                   this.setState({
-                    willWatch: true
+                    willWatch: true,
                   })
                   addMovieToWillWatch(movie)
                 }}
@@ -71,21 +72,19 @@ class MovieItem extends React.Component {
               </button>
             )}
 
-            <button type="button"
-              onClick={removeMovie.bind(null, movie)}
-            >
+            <button type="button" onClick={removeMovie.bind(null, movie)}>
               Delete movie
             </button>
           </div>
         </div>
-        <button type="button" onClick={this.toggleOverview}
-        >
+        <button type="button" onClick={this.toggleOverview}>
           Overview
         </button>
         <p>{this.state.showDescription ? <p>{movie.overview}</p> : null}</p>
-        <button type="button"
-        onClick={this.handleLike}
-        className={this.state.like ? "btn--like" : ""}
+        <button
+          type="button"
+          onClick={this.handleLike}
+          className={this.state.like ? 'btn--like' : ''}
         >
           like
         </button>
@@ -94,4 +93,4 @@ class MovieItem extends React.Component {
   }
 }
 
-export default MovieItem;
+export default MovieItem
